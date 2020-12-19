@@ -35,84 +35,17 @@ namespace APIs_FinalProject.Controllers
             return Ok(team);
         }
 
-        // PUT: api/teams/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Putteam(int id, team team)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != team.team_id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(team).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!teamExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/teams
+        [Route("api/LeagueTeams/{id}")]
         [ResponseType(typeof(team))]
-        public IHttpActionResult Postteam(team team)
+        public IHttpActionResult GetteamsPerLeague(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.teams.Add(team);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = team.team_id }, team);
-        }
-
-        // DELETE: api/teams/5
-        [ResponseType(typeof(team))]
-        public IHttpActionResult Deleteteam(int id)
-        {
-            team team = db.teams.Find(id);
+            var team = db.teams.Where(n =>n.league_id == id);
             if (team == null)
             {
                 return NotFound();
             }
 
-            db.teams.Remove(team);
-            db.SaveChanges();
-
             return Ok(team);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool teamExists(int id)
-        {
-            return db.teams.Count(e => e.team_id == id) > 0;
         }
     }
 }

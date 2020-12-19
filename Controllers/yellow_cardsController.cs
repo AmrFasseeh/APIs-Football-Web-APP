@@ -24,9 +24,10 @@ namespace APIs_FinalProject.Controllers
 
         // GET: api/yellow_cards/5
         [ResponseType(typeof(yellow_cards))]
-        public IHttpActionResult Getyellow_cards(int id)
+        [Route("api/yellowPlayer/{id}")]
+        public IHttpActionResult Getyellow_cardsPerplayer(int id)
         {
-            yellow_cards yellow_cards = db.yellow_cards.Find(id);
+            int? yellow_cards = db.yellow_cards.Where(n => n.player_id == id).Count();
             if (yellow_cards == null)
             {
                 return NotFound();
@@ -35,84 +36,32 @@ namespace APIs_FinalProject.Controllers
             return Ok(yellow_cards);
         }
 
-        // PUT: api/yellow_cards/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Putyellow_cards(int id, yellow_cards yellow_cards)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != yellow_cards.yellow_card_id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(yellow_cards).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!yellow_cardsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/yellow_cards
+        // GET: api/yellow_cards/5
         [ResponseType(typeof(yellow_cards))]
-        public IHttpActionResult Postyellow_cards(yellow_cards yellow_cards)
+        [Route("api/yellowMatch/{id}")]
+        public IHttpActionResult Getyellow_cardsPerMatch(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.yellow_cards.Add(yellow_cards);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = yellow_cards.yellow_card_id }, yellow_cards);
-        }
-
-        // DELETE: api/yellow_cards/5
-        [ResponseType(typeof(yellow_cards))]
-        public IHttpActionResult Deleteyellow_cards(int id)
-        {
-            yellow_cards yellow_cards = db.yellow_cards.Find(id);
+            int? yellow_cards = db.yellow_cards.Where(n => n.match_id == id).Count();
             if (yellow_cards == null)
             {
                 return NotFound();
             }
 
-            db.yellow_cards.Remove(yellow_cards);
-            db.SaveChanges();
-
             return Ok(yellow_cards);
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: api/yellow_cards/5
+        [ResponseType(typeof(yellow_cards))]
+        [Route("api/yellowTeam/{id}")]
+        public IHttpActionResult Getyellow_cardsPerTeam(int id)
         {
-            if (disposing)
+            int? yellow_cards = db.yellow_cards.Where(n => n.team_id == id).Count();
+            if (yellow_cards == null)
             {
-                db.Dispose();
+                return NotFound();
             }
-            base.Dispose(disposing);
-        }
 
-        private bool yellow_cardsExists(int id)
-        {
-            return db.yellow_cards.Count(e => e.yellow_card_id == id) > 0;
+            return Ok(yellow_cards);
         }
     }
 }

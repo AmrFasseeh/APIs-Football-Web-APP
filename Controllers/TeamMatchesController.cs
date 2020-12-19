@@ -26,108 +26,13 @@ namespace APIs_FinalProject.Controllers
         [ResponseType(typeof(TeamMatch))]
         public IHttpActionResult GetTeamMatch(int id)
         {
-            TeamMatch teamMatch = db.TeamMatches.Find(id);
+            var teamMatch = db.TeamMatches.Where(n => n.team_id == id);
             if (teamMatch == null)
             {
                 return NotFound();
             }
 
             return Ok(teamMatch);
-        }
-
-        // PUT: api/TeamMatches/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTeamMatch(int id, TeamMatch teamMatch)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != teamMatch.match_id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(teamMatch).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TeamMatchExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/TeamMatches
-        [ResponseType(typeof(TeamMatch))]
-        public IHttpActionResult PostTeamMatch(TeamMatch teamMatch)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.TeamMatches.Add(teamMatch);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (TeamMatchExists(teamMatch.match_id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = teamMatch.match_id }, teamMatch);
-        }
-
-        // DELETE: api/TeamMatches/5
-        [ResponseType(typeof(TeamMatch))]
-        public IHttpActionResult DeleteTeamMatch(int id)
-        {
-            TeamMatch teamMatch = db.TeamMatches.Find(id);
-            if (teamMatch == null)
-            {
-                return NotFound();
-            }
-
-            db.TeamMatches.Remove(teamMatch);
-            db.SaveChanges();
-
-            return Ok(teamMatch);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool TeamMatchExists(int id)
-        {
-            return db.TeamMatches.Count(e => e.match_id == id) > 0;
         }
     }
 }

@@ -35,84 +35,18 @@ namespace APIs_FinalProject.Controllers
             return Ok(post);
         }
 
-        // PUT: api/posts/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Putpost(int id, post post)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != post.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(post).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!postExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/posts
+        // GET: api/posts/5
         [ResponseType(typeof(post))]
-        public IHttpActionResult Postpost(post post)
+        [Route("api/postsTags/{id}")]
+        public IHttpActionResult GetpostPerTag(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.posts.Add(post);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = post.id }, post);
-        }
-
-        // DELETE: api/posts/5
-        [ResponseType(typeof(post))]
-        public IHttpActionResult Deletepost(int id)
-        {
-            post post = db.posts.Find(id);
+            var post = db.posts.Where(n => n.tags.All(t => t.post_id == id));
             if (post == null)
             {
                 return NotFound();
             }
 
-            db.posts.Remove(post);
-            db.SaveChanges();
-
             return Ok(post);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool postExists(int id)
-        {
-            return db.posts.Count(e => e.id == id) > 0;
         }
     }
 }

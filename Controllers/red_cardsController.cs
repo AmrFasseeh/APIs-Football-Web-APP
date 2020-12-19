@@ -22,11 +22,13 @@ namespace APIs_FinalProject.Controllers
             return db.red_cards;
         }
 
+
         // GET: api/red_cards/5
         [ResponseType(typeof(red_cards))]
-        public IHttpActionResult Getred_cards(int id)
+        [Route("api/redPlayer/{id}")]
+        public IHttpActionResult Getred_cardsPerplayer(int id)
         {
-            red_cards red_cards = db.red_cards.Find(id);
+            int? red_cards = db.red_cards.Where(n => n.player_id == id).Count();
             if (red_cards == null)
             {
                 return NotFound();
@@ -35,84 +37,32 @@ namespace APIs_FinalProject.Controllers
             return Ok(red_cards);
         }
 
-        // PUT: api/red_cards/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult Putred_cards(int id, red_cards red_cards)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != red_cards.red_card_id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(red_cards).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!red_cardsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/red_cards
+        // GET: api/red_cards/5
         [ResponseType(typeof(red_cards))]
-        public IHttpActionResult Postred_cards(red_cards red_cards)
+        [Route("api/redMatch/{id}")]
+        public IHttpActionResult Getred_cardsPerMatch(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.red_cards.Add(red_cards);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = red_cards.red_card_id }, red_cards);
-        }
-
-        // DELETE: api/red_cards/5
-        [ResponseType(typeof(red_cards))]
-        public IHttpActionResult Deletered_cards(int id)
-        {
-            red_cards red_cards = db.red_cards.Find(id);
+            int? red_cards = db.red_cards.Where(n => n.match_id == id).Count();
             if (red_cards == null)
             {
                 return NotFound();
             }
 
-            db.red_cards.Remove(red_cards);
-            db.SaveChanges();
-
             return Ok(red_cards);
         }
 
-        protected override void Dispose(bool disposing)
+        // GET: api/red_cards/5
+        [ResponseType(typeof(red_cards))]
+        [Route("api/redTeam/{id}")]
+        public IHttpActionResult Getred_cardsPerTeam(int id)
         {
-            if (disposing)
+            int? red_cards = db.red_cards.Where(n => n.team_id == id).Count();
+            if (red_cards == null)
             {
-                db.Dispose();
+                return NotFound();
             }
-            base.Dispose(disposing);
-        }
 
-        private bool red_cardsExists(int id)
-        {
-            return db.red_cards.Count(e => e.red_card_id == id) > 0;
+            return Ok(red_cards);
         }
     }
 }
