@@ -34,5 +34,19 @@ namespace APIs_FinalProject.Controllers
 
             return Ok(player);
         }
+
+        // GET: api/players/5
+        [ResponseType(typeof(player))]
+        [Route("api/playerTeam/{id}")]
+        public IHttpActionResult GetplayerPerTeam(int id)
+        {
+            var player = db.players.Where(n => n.team_id == id);
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(player);
+        }
     }
 }
