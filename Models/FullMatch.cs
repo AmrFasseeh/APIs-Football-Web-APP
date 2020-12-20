@@ -8,6 +8,7 @@ namespace APIs_FinalProject.Models
     public class FullMatch
     {
         public int match_id { get; set; }
+        public int league_id { get; set; }
 
         public string team1_name { get; set; }
 

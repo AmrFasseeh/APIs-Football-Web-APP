@@ -24,6 +24,7 @@ namespace APIs_FinalProject.Controllers
             {
                 FullMatch fmatch = new FullMatch();
                 fmatch.match_id = match.match_id;
+                fmatch.league_id = (int)match.TeamMatches.First(m => m.match_id == match.match_id).team.league_id;
                 fmatch.team1_name = match.TeamMatches.First(m => m.match_id == match.match_id).team.name;
                 fmatch.team2_name = match.TeamMatches.Last(m => m.match_id == match.match_id).team.name;
                 fmatch.team1_score = match.team1_score;
@@ -47,6 +48,7 @@ namespace APIs_FinalProject.Controllers
             } else
             {
                 fmatch.match_id = match.match_id;
+                fmatch.league_id = (int)match.TeamMatches.First(m => m.match_id == match.match_id).team.league_id;
                 fmatch.team1_name = match.TeamMatches.First(m => m.match_id == match.match_id).team.name;
                 fmatch.team2_name = match.TeamMatches.Last(m => m.match_id == match.match_id).team.name;
                 fmatch.team1_score = match.team1_score;
