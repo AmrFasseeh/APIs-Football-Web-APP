@@ -43,6 +43,9 @@ namespace APIs_FinalProject.Controllers
             FullMatch fmatch = new FullMatch();
             if (match == null)
             {
+                return NotFound();
+            } else
+            {
                 fmatch.match_id = match.match_id;
                 fmatch.team1_name = match.TeamMatches.First(m => m.match_id == match.match_id).team.name;
                 fmatch.team2_name = match.TeamMatches.Last(m => m.match_id == match.match_id).team.name;
@@ -50,7 +53,6 @@ namespace APIs_FinalProject.Controllers
                 fmatch.team2_score = match.team2_score;
                 fmatch.date = match.date;
                 fmatch.status = match.status;
-                return NotFound();
             }
 
             return Ok(fmatch);
