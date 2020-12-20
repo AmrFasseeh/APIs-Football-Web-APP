@@ -17,9 +17,22 @@ namespace APIs_FinalProject.Controllers
         private APIModel db = new APIModel();
 
         // GET: api/matches
-        public IQueryable<match> Getmatches()
+        public List<FullMatch> Getmatches()
         {
-            return db.matches;
+            List<FullMatch> fmatches = new List<FullMatch>();
+            foreach(var match in db.matches)
+            {
+                FullMatch fmatch = new FullMatch();
+                fmatch.match_id = match.match_id;
+                fmatch.team1_name = match.TeamMatches.First(m => m.match_id == match.match_id).team.name;
+                fmatch.team2_name = match.TeamMatches.Last(m => m.match_id == match.match_id).team.name;
+                fmatch.team1_score = match.team1_score;
+                fmatch.team2_score = match.team2_score;
+                fmatch.date = match.date;
+                fmatch.status = match.status;
+                fmatches.Add(fmatch);
+            }
+            return fmatches;
         }
 
         // GET: api/matches/5

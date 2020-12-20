@@ -178,6 +178,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\APIModel.cs" />
+    <Compile Include="Models\FullMatch.cs" />
     <Compile Include="Models\goal.cs" />
     <Compile Include="Models\league.cs" />
     <Compile Include="Models\match.cs" />
