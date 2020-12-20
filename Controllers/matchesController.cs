@@ -40,12 +40,20 @@ namespace APIs_FinalProject.Controllers
         public IHttpActionResult Getmatch(int id)
         {
             match match = db.matches.Find(id);
+            FullMatch fmatch = new FullMatch();
             if (match == null)
             {
+                fmatch.match_id = match.match_id;
+                fmatch.team1_name = match.TeamMatches.First(m => m.match_id == match.match_id).team.name;
+                fmatch.team2_name = match.TeamMatches.Last(m => m.match_id == match.match_id).team.name;
+                fmatch.team1_score = match.team1_score;
+                fmatch.team2_score = match.team2_score;
+                fmatch.date = match.date;
+                fmatch.status = match.status;
                 return NotFound();
             }
 
-            return Ok(match);
+            return Ok(fmatch);
         }
     }
 }
