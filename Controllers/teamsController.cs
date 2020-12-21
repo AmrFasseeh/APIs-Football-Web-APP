@@ -69,6 +69,7 @@ namespace APIs_FinalProject.Controllers
                     }
                 }
             }
+            db.SaveChangesAsync();
             return db.teams;
         }
 
@@ -131,7 +132,7 @@ namespace APIs_FinalProject.Controllers
             {
                 return NotFound();
             }
-
+            db.SaveChangesAsync();
             return Ok(team);
         }
 
@@ -141,7 +142,6 @@ namespace APIs_FinalProject.Controllers
         {
             var team = db.teams.Where(n =>n.league_id == id);
             var allteams = db.teams.ToList();
-
             foreach (var item in allteams)
             {
                 if (item.TeamMatches.Count != 0)
@@ -194,7 +194,7 @@ namespace APIs_FinalProject.Controllers
             {
                 return NotFound();
             }
-
+            db.SaveChangesAsync();
             return Ok(team);
         }
     }
