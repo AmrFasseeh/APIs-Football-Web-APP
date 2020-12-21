@@ -59,5 +59,27 @@ namespace APIs_FinalProject.Controllers
 
             return Ok(fmatch);
         }
+        [Route("api/matchesByLeague/{id}")]
+        public List<FullMatch> GetmatchesByLeagueId(int id)
+        {
+            List<FullMatch> fmatches = new List<FullMatch>();
+            foreach (var match in db.matches)
+            {
+                FullMatch fmatch = new FullMatch();
+                fmatch.match_id = match.match_id;
+                fmatch.league_id = (int)match.TeamMatches.First(m => m.match_id == match.match_id).team.league_id;
+                fmatch.team1_name = match.TeamMatches.First(m => m.match_id == match.match_id).team.name;
+                fmatch.team2_name = match.TeamMatches.Last(m => m.match_id == match.match_id).team.name;
+                fmatch.team1_score = match.team1_score;
+                fmatch.team2_score = match.team2_score;
+                fmatch.date = match.date;
+                fmatch.status = match.status;
+                if(fmatch.league_id == id)
+                {
+                    fmatches.Add(fmatch);
+                }
+            }
+            return fmatches;
+        }
     }
 }
