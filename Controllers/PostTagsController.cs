@@ -24,14 +24,28 @@ namespace APIs_FinalProject.Controllers
 
         // GET: api/PostTags/5
         [ResponseType(typeof(PostTag))]
-        public IHttpActionResult GetPostTag(int id)
+        [Route("api/tagposts/{id}")]
+        public IHttpActionResult GetTagPosts(int id)
         {
-            var postTags = db.posts.Where(p => p.id == db.PostTags.First(pt => pt.tagId == id).postId);
+            var postTags = db.PostTags.Where(n => n.tagId == id);
             if (postTags == null)
             {
                 return NotFound();
             }
 
+            return Ok(postTags);
+        }
+
+        // GET: api/PostTags/5
+        [ResponseType(typeof(PostTag))]
+        [Route("api/posttags/{id}")]
+        public IHttpActionResult GetPostTags(int id)
+        {
+            var postTags = db.PostTags.Where(n => n.postId == id);
+            if (postTags == null)
+            {
+                return NotFound();
+            }
             return Ok(postTags);
         }
     }

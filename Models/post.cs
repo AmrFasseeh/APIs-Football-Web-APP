@@ -1,5 +1,6 @@
 namespace APIs_FinalProject.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -35,7 +36,7 @@ namespace APIs_FinalProject.Models
         public string post_type { get; set; }
         public string post_date { get; set; }
         public string updated_at { get; set; }
-
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PostTag> PostTags { get; set; }
     }
