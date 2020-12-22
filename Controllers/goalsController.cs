@@ -23,16 +23,21 @@ namespace APIs_FinalProject.Controllers
         }
 
         // GET: api/goals/5
-        [ResponseType(typeof(goal))]
+        [ResponseType(typeof(GoalsViewModel))]
         public IHttpActionResult GetgoalPerPlayer(int id)
         {
             int? goal = db.goals.Where(n => n.player_id == id).Count();
+            GoalsViewModel goals = new GoalsViewModel();
             if (goal == null)
             {
                 return NotFound();
             }
+            if(goal != null)
+            {
+                goals.count = goal;
+            }
 
-            return Ok(goal);
+            return Ok(goals);
         }
     }
 }

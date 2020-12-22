@@ -24,45 +24,60 @@ namespace APIs_FinalProject.Controllers
 
 
         // GET: api/red_cards/5
-        [ResponseType(typeof(red_cards))]
+        [ResponseType(typeof(RedCardsViewModel))]
         [Route("api/redPlayer/{id}")]
         public IHttpActionResult Getred_cardsPerplayer(int id)
         {
             int? red_cards = db.red_cards.Where(n => n.player_id == id).Count();
+            RedCardsViewModel cards = new RedCardsViewModel();
             if (red_cards == null)
             {
                 return NotFound();
             }
+            if (red_cards != null)
+            {
+                cards.count = red_cards;
+            }
 
-            return Ok(red_cards);
+            return Ok(cards);
         }
 
         // GET: api/red_cards/5
-        [ResponseType(typeof(red_cards))]
+        [ResponseType(typeof(RedCardsViewModel))]
         [Route("api/redMatch/{id}")]
         public IHttpActionResult Getred_cardsPerMatch(int id)
         {
             int? red_cards = db.red_cards.Where(n => n.match_id == id).Count();
+            RedCardsViewModel cards = new RedCardsViewModel();
             if (red_cards == null)
             {
                 return NotFound();
             }
+            if (red_cards != null)
+            {
+                cards.count = red_cards;
+            }
 
-            return Ok(red_cards);
+            return Ok(cards);
         }
 
         // GET: api/red_cards/5
-        [ResponseType(typeof(red_cards))]
+        [ResponseType(typeof(RedCardsViewModel))]
         [Route("api/redTeam/{id}")]
         public IHttpActionResult Getred_cardsPerTeam(int id)
         {
             int? red_cards = db.red_cards.Where(n => n.team_id == id).Count();
+            RedCardsViewModel cards = new RedCardsViewModel();
             if (red_cards == null)
             {
                 return NotFound();
             }
+            if (red_cards != null)
+            {
+                cards.count = red_cards;
+            }
 
-            return Ok(red_cards);
+            return Ok(cards);
         }
     }
 }

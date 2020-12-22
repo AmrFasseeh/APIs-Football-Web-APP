@@ -23,45 +23,62 @@ namespace APIs_FinalProject.Controllers
         }
 
         // GET: api/yellow_cards/5
-        [ResponseType(typeof(yellow_cards))]
+        [ResponseType(typeof(YellowCardsViewModel))]
         [Route("api/yellowPlayer/{id}")]
         public IHttpActionResult Getyellow_cardsPerplayer(int id)
         {
             int? yellow_cards = db.yellow_cards.Where(n => n.player_id == id).Count();
+            YellowCardsViewModel cards = new YellowCardsViewModel();
             if (yellow_cards == null)
             {
                 return NotFound();
             }
+            if (yellow_cards != null) { 
+            
+            cards.count = yellow_cards;
+            }
 
-            return Ok(yellow_cards);
+            return Ok(cards);
         }
 
         // GET: api/yellow_cards/5
-        [ResponseType(typeof(yellow_cards))]
+        [ResponseType(typeof(YellowCardsViewModel))]
         [Route("api/yellowMatch/{id}")]
         public IHttpActionResult Getyellow_cardsPerMatch(int id)
         {
             int? yellow_cards = db.yellow_cards.Where(n => n.match_id == id).Count();
+            YellowCardsViewModel cards = new YellowCardsViewModel();
             if (yellow_cards == null)
             {
                 return NotFound();
             }
+            if (yellow_cards != null)
+            {
 
-            return Ok(yellow_cards);
+                cards.count = yellow_cards;
+            }
+
+            return Ok(cards);
         }
 
         // GET: api/yellow_cards/5
-        [ResponseType(typeof(yellow_cards))]
+        [ResponseType(typeof(YellowCardsViewModel))]
         [Route("api/yellowTeam/{id}")]
         public IHttpActionResult Getyellow_cardsPerTeam(int id)
         {
             int? yellow_cards = db.yellow_cards.Where(n => n.team_id == id).Count();
+            YellowCardsViewModel cards = new YellowCardsViewModel();
             if (yellow_cards == null)
             {
                 return NotFound();
             }
+            if (yellow_cards != null)
+            {
 
-            return Ok(yellow_cards);
+                cards.count = yellow_cards;
+            }
+
+            return Ok(cards);
         }
     }
 }
