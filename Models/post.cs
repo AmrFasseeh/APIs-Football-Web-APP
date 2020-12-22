@@ -1,6 +1,5 @@
 namespace APIs_FinalProject.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,30 +11,32 @@ namespace APIs_FinalProject.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public post()
         {
-            tags = new HashSet<tag>();
+            PostTags = new HashSet<PostTag>();
         }
 
         public int id { get; set; }
 
         [Required]
+        [Display(Name = "Post Title")]
         public string post_title { get; set; }
 
         [Column(TypeName = "text")]
         [Required]
+        [Display(Name = "Post Content")]
         public string post_content { get; set; }
 
         [StringLength(50)]
+        [Display(Name = "Post Image")]
         public string post_image { get; set; }
 
-        [Required]
         [StringLength(50)]
+        [Required]
+        [Display(Name = "Post Type")]
         public string post_type { get; set; }
-
         public string post_date { get; set; }
-
         public string updated_at { get; set; }
-        [JsonIgnore]
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tag> tags { get; set; }
+        public virtual ICollection<PostTag> PostTags { get; set; }
     }
 }

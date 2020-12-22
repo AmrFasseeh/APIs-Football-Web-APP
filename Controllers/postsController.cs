@@ -34,19 +34,5 @@ namespace APIs_FinalProject.Controllers
 
             return Ok(post);
         }
-
-        // GET: api/posts/5
-        [ResponseType(typeof(post))]
-        [Route("api/postsTags/{id}")]
-        public IHttpActionResult GetpostPerTag(int id)
-        {
-            var post = db.posts.Where(n => n.tags.All(t => t.post_id == id));
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(post);
-        }
     }
 }
