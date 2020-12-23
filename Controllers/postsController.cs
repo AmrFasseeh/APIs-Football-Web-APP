@@ -34,5 +34,39 @@ namespace APIs_FinalProject.Controllers
 
             return Ok(post);
         }
+
+        // GET: api/posts/5
+        [ResponseType(typeof(post))]
+        [Route("api/recentposts")]
+
+        public IHttpActionResult GetRecentPosts()
+        {
+            var post = db.posts.OrderByDescending(n=>n.updated_at);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(post);
+        }
+
+        // GET: api/posts/5
+        [ResponseType(typeof(post))]
+        [Route("api/poststype")]
+
+        public IHttpActionResult GetPoststype()
+        {
+            var post = db.posts.OrderByDescending(n => n.post_type);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(post);
+        }
+
+
+
+
     }
 }

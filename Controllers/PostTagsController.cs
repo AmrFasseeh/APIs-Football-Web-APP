@@ -38,6 +38,20 @@ namespace APIs_FinalProject.Controllers
 
         // GET: api/PostTags/5
         [ResponseType(typeof(PostTag))]
+        [Route("api/recenttagposts/{id}")]
+        public IHttpActionResult GetRecentTagPosts(int id)
+        {
+            var postTags = db.PostTags.Where(n => n.tagId == id).OrderByDescending(n=>n.Post.updated_at);
+            if (postTags == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(postTags);
+        }
+
+        // GET: api/PostTags/5
+        [ResponseType(typeof(PostTag))]
         [Route("api/posttags/{id}")]
         public IHttpActionResult GetPostTags(int id)
         {

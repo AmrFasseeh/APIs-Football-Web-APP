@@ -78,7 +78,7 @@ namespace APIs_FinalProject.Controllers
         public IHttpActionResult Getteam(int id)
         {
             team team = db.teams.Find(id);
-            var allteams = db.teams.ToList();
+            var allteams = db.teams.ToList().OrderByDescending(n=>n.points);
 
             foreach (var item in allteams)
             {
@@ -140,7 +140,7 @@ namespace APIs_FinalProject.Controllers
         [ResponseType(typeof(team))]
         public IHttpActionResult GetteamsPerLeague(int id)
         {
-            var team = db.teams.Where(n =>n.league_id == id);
+            var team = db.teams.Where(n =>n.league_id == id).OrderByDescending(n => n.points);
             var allteams = db.teams.ToList();
             foreach (var item in allteams)
             {
